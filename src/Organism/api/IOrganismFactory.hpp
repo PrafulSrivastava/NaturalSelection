@@ -11,8 +11,8 @@ namespace SmartEvolution::Organism
         IOrganismFactory() = default;
         virtual ~IOrganismFactory() = default;
 
-        virtual std::shared_ptr<Organism> getOrganism(std::shared_ptr<Common::Entity> &&entity, sf::Vector2f &&pos) = 0;
-        virtual std::shared_ptr<Organism> getOrganism(std::shared_ptr<Common::Entity> &&entity) = 0;
+        virtual Organism getOrganism(std::shared_ptr<Common::Entity> &&entity, sf::Vector2f &&pos) = 0;
+        virtual Organism getOrganism(std::shared_ptr<Common::Entity> &&entity) = 0;
     };
 }
 

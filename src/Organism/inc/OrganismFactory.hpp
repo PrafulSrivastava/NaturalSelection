@@ -16,8 +16,8 @@ namespace SmartEvolution::Organism
         OrganismFactory(OrganismFactory &&) = delete;
         OrganismFactory &operator=(OrganismFactory &&) = delete;
 
-        std::shared_ptr<Organism> getOrganism(std::shared_ptr<Common::Entity> &&entity, sf::Vector2f &&pos) override;
-        std::shared_ptr<Organism> getOrganism(std::shared_ptr<Common::Entity> &&entity) override;
+        Organism getOrganism(std::shared_ptr<Common::Entity> &&entity, sf::Vector2f &&pos) override;
+        Organism getOrganism(std::shared_ptr<Common::Entity> &&entity) override;
     };
 }
 

@@ -3,13 +3,15 @@
 
 namespace SmartEvolution::Common
 {
-    std::shared_ptr<Entity> EntityFactory::getEntity(const GenomeSequence &sequence)
+    std::shared_ptr<Entity> EntityFactory::getEntity(const EntityType &entityType, const GenomeSequence &sequence)
     {
-        if (m_entites[sequence] == nullptr)
+        GenomeSequenceId id = sequence.to_string();
+        auto color = sf::Color::Green;
+        if (m_entites[id] == nullptr)
         {
-            m_entites[sequence] = std::make_shared<Entity>(Utility::getFreshColor(sf::Color::Green), OrganismSize, sequence);
+            m_entites[id] = std::make_shared<LivingEntity>(Utility::getFreshColor(sf::Color::White), OrganismSize, id);
         }
 
-        return m_entites[sequence];
+        return m_entites[id];
     }
 }

@@ -2,16 +2,13 @@
 #define ENTITY_FACTORY_HPP
 
 #include "IEntityFactory.hpp"
-#include <unordered_map>
-#include <memory>
-#include <array>
 
 namespace SmartEvolution::Common
 {
     class EntityFactory : public IEntityFactory
     {
     private:
-        std::unordered_map<GenomeSequence, std::shared_ptr<Entity>> m_entites;
+        std::unordered_map<GenomeSequenceId, std::shared_ptr<Entity>> m_entites;
 
     public:
         EntityFactory() = default;
@@ -22,7 +19,7 @@ namespace SmartEvolution::Common
         EntityFactory(EntityFactory &&) = delete;
         EntityFactory &operator=(EntityFactory &&) = delete;
 
-        std::shared_ptr<Entity> getEntity(const GenomeSequence &) override;
+        std::shared_ptr<Entity> getEntity(const EntityType &, const GenomeSequence &) override;
     };
 }
 

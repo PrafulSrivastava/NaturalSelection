@@ -1,22 +1,21 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
-#include <SFML/Graphics.hpp>
 #include "CommonTypes.hpp"
 #include "Utility.hpp"
 
 namespace SmartEvolution::Common
 {
-    struct Entity : sf::CircleShape
+    struct Entity
     {
-        Entity(const sf::Color &color, const FResolution &size, const GenomeSequence &sequence)
+        Entity(const sf::Color &color, const FResolution &size)
             : m_color{color},
-              m_size{size},
-              m_sequence{sequence}
+              m_size{size}
         {
-            std::cout << __func__ << std::endl;
+            std::cout << __func__ << " with Color : " << m_color.toInteger() << std::endl;
         }
-        ~Entity() = default;
+        virtual ~Entity() = default;
+        virtual GenomeSequenceId getGenomeSequence() = 0;
 
         Entity(const Entity &) = delete;
         Entity &operator=(const Entity &) = delete;
@@ -25,7 +24,34 @@ namespace SmartEvolution::Common
 
         sf::Color m_color;
         FResolution m_size;
-        GenomeSequence m_sequence{};
+    };
+
+    struct LivingEntity : public Entity
+    {
+        LivingEntity(const sf::Color &color, const FResolution &size, const GenomeSequenceId &sequence)
+            : Entity(color, size),
+              m_sequence{sequence}
+        {
+            std::cout << "Adding Life to entity with GenomeSequenceId : " << m_sequence << std::endl;
+        }
+
+        GenomeSequenceId getGenomeSequence() override
+        {
+            return m_sequence;
+        }
+
+        GenomeSequenceId m_sequence{};
+    };
+
+    struct NonLivingEntity : public Entity
+    {
+        NonLivingEntity(const sf::Color &color, const FResolution &size)
+            : Entity(color, size) {}
+
+        GenomeSequenceId getGenomeSequence() override
+        {
+            return {};
+        }
     };
 }
 

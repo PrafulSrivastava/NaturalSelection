@@ -8,13 +8,15 @@
 namespace SmartEvolution::Organism
 {
 
-    struct Organism
+    struct Organism : sf::CircleShape
     {
         Organism(std::shared_ptr<Common::Entity> &&entity, sf::Vector2f &&pos)
-            : m_entity(std::move(entity)),
-              m_position(std::move(pos))
+            : m_entity(std::move(entity))
         {
-            std::cout << __func__ << std::endl;
+            setPosition(pos);
+            setFillColor(m_entity->m_color);
+            setRadius(m_entity->m_size);
+            std::cout << __func__ << " At: {" << getPosition().x << ", " << getPosition().y << "}" << std::endl;
         }
 
         ~Organism()
@@ -23,7 +25,6 @@ namespace SmartEvolution::Organism
         }
 
         std::shared_ptr<Common::Entity> m_entity;
-        sf::Vector2f m_position;
     };
 }
 
