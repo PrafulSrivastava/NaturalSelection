@@ -20,7 +20,9 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/src/Common/inc/
 	${CMAKE_SOURCE_DIR}/src/Common/api/
 	${CMAKE_SOURCE_DIR}/src/Organism/inc/
-	${CMAKE_SOURCE_DIR}/src/Organism/api/
+	${CMAKE_SOURCE_DIR}/src/Organism/api/	
+	${CMAKE_SOURCE_DIR}/src/PointOfInterest/inc/
+	${CMAKE_SOURCE_DIR}/src/PointOfInterest/api/
 )
 
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCE_FILES

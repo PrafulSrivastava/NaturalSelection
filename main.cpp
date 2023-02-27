@@ -2,11 +2,13 @@
 #include "EntityFactory.hpp"
 #include "OrganismFactory.hpp"
 #include "BrainProxy.hpp"
+#include "Boundry.hpp"
 #include <math.h>
 
 using namespace SmartEvolution::Common;
 using namespace SmartEvolution::Organism;
 using namespace SmartEvolution::Brain;
+using namespace SmartEvolution::PointOfInterest;
 
 void testOrganismFactory()
 {
@@ -30,34 +32,35 @@ void testBrainProxy()
 
 void testRun()
 {
-    auto sharedPtrWindow = std::make_shared<sf::RenderWindow>(
-        sf::VideoMode(Width, Height), WindowName);
-
+    sf::RenderWindow window(sf::VideoMode(Width, Height), WindowName);
     std::unique_ptr<IEntityFactory> entityFactory = std::make_unique<EntityFactory>();
     std::unique_ptr<IOrganismFactory> organismFactory = std::make_unique<OrganismFactory>();
     std::vector<Organism> orgs;
     std::unique_ptr<IBrainProxy> brainProxy = std::make_unique<BrainProxy>();
+
+    IPointOfInterestProxy<Boundry> boundry;
+
     for (auto i = 0; i < 10; i++)
     {
         orgs.emplace_back(organismFactory->getOrganism(entityFactory->getEntity(EntityType::Living, GenomeSequence("11000"))));
     }
 
-    while (sharedPtrWindow->isOpen())
+    while (window.isOpen())
     {
         sf::Event event;
-        sharedPtrWindow->clear(sf::Color::Black);
+        window.clear(sf::Color::Black);
 
-        while (sharedPtrWindow->pollEvent(event))
+        while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                sharedPtrWindow->close();
+                window.close();
             }
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Escape)
                 {
-                    sharedPtrWindow->close();
+                    window.close();
                 }
             }
         }
@@ -94,9 +97,10 @@ void testRun()
                 org.setPosition(pos);
                 break;
             }
-            sharedPtrWindow->draw(org);
+            org.draw(window);
         }
-        sharedPtrWindow->display();
+        boundry.spawn(entityFactory->getEntity(EntityType::Boundry), window);
+        window.display();
     }
 }
 
