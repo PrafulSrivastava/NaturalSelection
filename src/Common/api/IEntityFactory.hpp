@@ -12,6 +12,7 @@ namespace SmartEvolution::Common
         virtual ~IEntityFactory() = default;
 
         virtual std::shared_ptr<Entity> getEntity(const EntityType &, const GenomeSequence &) = 0;
+        virtual std::shared_ptr<Entity> getEntity(const EntityType &) = 0;
     };
 }
 

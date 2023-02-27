@@ -20,6 +20,7 @@ namespace SmartEvolution::Common
         EntityFactory &operator=(EntityFactory &&) = delete;
 
         std::shared_ptr<Entity> getEntity(const EntityType &, const GenomeSequence &) override;
+        std::shared_ptr<Entity> getEntity(const EntityType &) override;
     };
 }
 

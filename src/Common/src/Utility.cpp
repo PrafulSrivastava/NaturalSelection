@@ -54,4 +54,23 @@ namespace SmartEvolution::Common
             return "ReactionType::MvR";
         }
     }
+
+    std::string Utility::translateEntityType(const EntityType &entity)
+    {
+        switch (entity)
+        {
+        case EntityType::Invalid:
+            return "EntityType::Invalid";
+        case EntityType::Living:
+            return "EntityType::Living";
+        case EntityType::Boundry:
+            return "EntityType::Boundry";
+        }
+    }
+
+    void Utility::setOriginToCenter(sf::CircleShape &obj)
+    {
+        obj.setOrigin(obj.getGlobalBounds().width / 2, obj.getGlobalBounds().height / 2);
+    }
+
 }

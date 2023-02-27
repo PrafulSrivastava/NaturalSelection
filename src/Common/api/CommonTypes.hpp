@@ -48,16 +48,18 @@ namespace SmartEvolution::Common
     {
         Invalid = 0,
         Living,
-        NonLiving
+        Boundry
     };
-
-    // Entity Factory
 
     // SFML
     constexpr auto Width = 800;
     constexpr auto Height = 600;
     constexpr auto Framerate = 120;
     constexpr auto WindowName = "NaturalSelection";
+
+    // POI
+    constexpr auto BoundrySize = 5;
+    using BoundrySet = std::array<sf::Vector2f, (Width + Height) * 2>;
 }
 
 #endif

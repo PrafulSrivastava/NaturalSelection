@@ -16,6 +16,8 @@ namespace SmartEvolution::Common
         static T getRandomNumberInRange(const T &min, const T &max);
         static sf::Color getFreshColor(const sf::Color &baseColor = sf::Color(0, 0, 0, 0));
         static std::string translateReaction(const ReactionType &);
+        static std::string translateEntityType(const EntityType &);
+        static void setOriginToCenter(sf::CircleShape &obj);
     };
 
     template <typename T>
