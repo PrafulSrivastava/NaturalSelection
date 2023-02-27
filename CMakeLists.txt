@@ -15,16 +15,16 @@ find_package(SFML 2
 set(LIBS pthread sfml-graphics sfml-audio sfml-window sfml-system)
 
 include_directories(
-	${CMAKE_SOURCE_DIR}/src/Brain/inc/
-	${CMAKE_SOURCE_DIR}/src/Brain/api/
+	${CMAKE_SOURCE_DIR}/config/
+    ${CMAKE_SOURCE_DIR}/resource/json/include/
+	${CMAKE_SOURCE_DIR}/src/Action/inc/
+	${CMAKE_SOURCE_DIR}/src/Action/api/
 	${CMAKE_SOURCE_DIR}/src/Common/inc/
-	${CMAKE_SOURCE_DIR}/src/Common/api/
-	${CMAKE_SOURCE_DIR}/src/Organism/inc/
-	${CMAKE_SOURCE_DIR}/src/Organism/api/
+	${CMAKE_SOURCE_DIR}/src/Entity/inc/
 )
 
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCE_FILES
-	main.cpp src/*.cpp
+	SmartEvolution.cpp src/*.cpp
 )	
 
 add_executable(${TARGET} ${${PROJECT_NAME}_SOURCE_FILES})
