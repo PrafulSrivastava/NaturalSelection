@@ -1,16 +1,21 @@
 #include "BrainProxy.hpp"
 
-namespace SmartEvolution::Brain
+namespace NaturalSelection::Brain
 {
-    Common::ReactionType BrainProxy::getReactionToStimuli(const Common::GenomeSequenceId &id, const Common::StimuliType &stimuli)
+    void BrainProxy::AddBrain(const Common::GenomeSequence &sequence)
     {
-        Common::GenomeSequence sequence(id);
-        if (m_brains[id] == nullptr)
+        if (m_brains.end() == m_brains.find(sequence))
         {
-            m_brains[id] = std::make_shared<Brain>(sequence);
+            m_brains.emplace(sequence, std::move(Brain(sequence)));
         }
+    }
 
-        return m_brains[id]->getReaction(stimuli);
+    void BrainProxy::React(const Common::GenomeSequence &sequence, const Common::StimuliType &stimuli, std::reference_wrapper<sf::CircleShape> drawableEntity)
+    {
+        // Add brain if not added already
+        AddBrain(sequence);
+        // Forward Call to right Brain
+        m_brains[sequence].React(stimuli, std::ref(drawableEntity));
     }
 
 }

@@ -31,6 +31,8 @@ namespace NaturalSelection::Common
 
     constexpr auto HEIGHT = 800;
     constexpr auto WIDTH = 800;
+
+    using Actions = std::vector<NeuronType>;
 }
 
 #endif

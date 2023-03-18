@@ -1,28 +1,24 @@
 #ifndef BRAIN_PROXY_HPP
 #define BRAIN_PROXY_HPP
 
-#include "CommonTypes.hpp"
 #include "IBrainProxy.hpp"
 #include "Brain.hpp"
 
-namespace SmartEvolution::Brain
+namespace NaturalSelection::Brain
 {
+
     class BrainProxy : public IBrainProxy
     {
     public:
         BrainProxy() = default;
-        virtual ~BrainProxy() = default;
-
-        BrainProxy(const BrainProxy &) = delete;
-        BrainProxy &operator=(const BrainProxy &) = delete;
-        BrainProxy(BrainProxy &&) = default;
-        BrainProxy &operator=(BrainProxy &&) = delete;
-
-        Common::ReactionType getReactionToStimuli(const Common::GenomeSequenceId &, const Common::StimuliType &) override;
+        ~BrainProxy() override = default;
+        void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) override;
 
     private:
-        std::unordered_map<Common::GenomeSequenceId, std::shared_ptr<Brain>> m_brains;
+        void AddBrain(const Common::GenomeSequence &);
+        std::unordered_map<Common::GenomeSequence, Brain> m_brains;
     };
+
 }
 
 #endif

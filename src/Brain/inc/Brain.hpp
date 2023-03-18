@@ -1,26 +1,26 @@
 #ifndef BRAIN_HPP
 #define BRAIN_HPP
 
-#include "CommonTypes.hpp"
-#include "Neuron.hpp"
+#include "IBrain.hpp"
 
-namespace SmartEvolution::Brain
+namespace NaturalSelection::Brain
 {
-    class Brain
+
+    class Brain : public IBrain
     {
-    private:
-        InputNeuron m_inputNeuron;
-
     public:
+        Brain() = default;
         Brain(const Common::GenomeSequence &);
-        ~Brain() = default;
+        ~Brain() override = default;
+        void React(const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) override;
 
-        Brain(const Brain &) = delete;
-        Brain &operator=(const Brain &) = delete;
-        Brain(Brain &&) = default;
-        Brain &operator=(Brain &&) = delete;
-        Common::ReactionType getReaction(const Common::StimuliType &);
+    private:
+        Common::Actions Evaluate();
+
+        std::vector<Common::NeuronType> m_neurons;
+        // Add ActionFactory
     };
+
 }
 
 #endif

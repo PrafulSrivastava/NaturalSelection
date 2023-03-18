@@ -2,8 +2,7 @@
 
 namespace NaturalSelection::Entity
 {
-
-    void Entity::Spawn()
+    Entity::Entity(Brain::BrainProxy &proxy) : m_brainProxy(proxy)
     {
         m_sequence.resize(Common::GenomeSequenceLength);
         for (size_t i = 0; i < Common::GenomeSequenceLength; i++)
@@ -12,6 +11,17 @@ namespace NaturalSelection::Entity
         }
 
         std::cout << __func__ << " GenomeSequence : " << m_sequence << std::endl;
+    }
+
+    Entity::Entity(Brain::BrainProxy &proxy, const Common::GenomeSequence &sequence)
+        : m_sequence(sequence),
+          m_brainProxy(proxy)
+    {
+        std::cout << __func__ << " GenomeSequence : " << m_sequence << std::endl;
+    }
+
+    void Entity::Spawn()
+    {
 
         m_drawableEntity.setPosition(rand() % Common::WIDTH, rand() % Common::HEIGHT);
         m_drawableEntity.setFillColor(sf::Color::Green);
@@ -20,7 +30,7 @@ namespace NaturalSelection::Entity
 
     void Entity::Update()
     {
-        m_brainProxy.React(m_sequence, Common::StimuliType::Mechanical, std::ref(m_drawableEntity));
+        m_brainProxy.get().React(m_sequence, Common::StimuliType::Mechanical, std::ref(m_drawableEntity));
     }
 
     void Entity::Draw(std::reference_wrapper<sf::RenderWindow> window)

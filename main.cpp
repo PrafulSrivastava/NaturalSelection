@@ -7,8 +7,8 @@ using namespace NaturalSelection::Common;
 int main()
 {
     srand(time(nullptr));
-
-    Entity org;
+    BrainProxy proxy;
+    Entity org(std::ref(proxy));
     org.Spawn();
     org.ToString();
     org.Update();

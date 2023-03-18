@@ -3,16 +3,16 @@
 
 #include "CommonTypes.hpp"
 
-namespace SmartEvolution::Brain
+namespace NaturalSelection::Brain
 {
+
     class IBrainProxy
     {
     public:
-        IBrainProxy() = default;
         virtual ~IBrainProxy() = default;
-
-        virtual Common::ReactionType getReactionToStimuli(const Common::GenomeSequenceId &, const Common::StimuliType &) = 0;
+        virtual void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) = 0;
     };
+
 }
 
 #endif

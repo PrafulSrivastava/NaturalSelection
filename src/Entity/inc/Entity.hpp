@@ -11,7 +11,8 @@ namespace NaturalSelection::Entity
     class Entity : public IEntity
     {
     public:
-        Entity() = default;
+        Entity(Brain::BrainProxy &);
+        Entity(Brain::BrainProxy &, const Common::GenomeSequence &);
         ~Entity() override = default;
         void Spawn() override;
         void Update() override;
@@ -21,7 +22,7 @@ namespace NaturalSelection::Entity
     private:
         Common::GenomeSequence m_sequence{};
         sf::CircleShape m_drawableEntity;
-        Brain::BrainProxy m_brainProxy;
+        std::reference_wrapper<Brain::BrainProxy> m_brainProxy;
     };
 
 }
