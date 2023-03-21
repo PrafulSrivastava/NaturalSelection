@@ -10,7 +10,7 @@ namespace NaturalSelection::Brain
     {
     public:
         virtual ~IBrainProxy() = default;
-        virtual void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) = 0;
+        virtual void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::Shape>) = 0;
     };
 
 }

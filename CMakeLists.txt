@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 set(CMAKE_BUILD_TYPE Debug)
 
-project(SmartEvolution)
+project(NaturalEvolution)
 
 set(CMAKE_CXX_FLAGS "-std=c++0x -g")
 set(TARGET ${PROJECT_NAME})
@@ -15,16 +15,21 @@ find_package(SFML 2
 set(LIBS pthread sfml-graphics sfml-audio sfml-window sfml-system)
 
 include_directories(
+	${CMAKE_SOURCE_DIR}/config/
+    ${CMAKE_SOURCE_DIR}/resource/json/include/
+	${CMAKE_SOURCE_DIR}/src/Action/inc/
+	${CMAKE_SOURCE_DIR}/src/Action/api/
 	${CMAKE_SOURCE_DIR}/src/Brain/inc/
 	${CMAKE_SOURCE_DIR}/src/Brain/api/
 	${CMAKE_SOURCE_DIR}/src/Common/inc/
 	${CMAKE_SOURCE_DIR}/src/Common/api/
 	${CMAKE_SOURCE_DIR}/src/Entity/inc/
 	${CMAKE_SOURCE_DIR}/src/Entity/api/	
+	${CMAKE_SOURCE_DIR}/src/Logger/inc/
 )
 
 file(GLOB_RECURSE ${PROJECT_NAME}_SOURCE_FILES
-	main.cpp src/*.cpp
+	NaturalEvolution.cpp src/*.cpp
 )	
 
 

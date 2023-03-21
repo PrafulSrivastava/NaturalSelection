@@ -2,6 +2,7 @@
 #define BRAIN_HPP
 
 #include "IBrain.hpp"
+#include "IActionFactory.hpp"
 
 namespace NaturalSelection::Brain
 {
@@ -12,15 +13,13 @@ namespace NaturalSelection::Brain
         Brain() = default;
         Brain(const Common::GenomeSequence &);
         ~Brain() override = default;
-        void React(const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) override;
+        void React(const Common::StimuliType &, std::reference_wrapper<sf::Shape>) override;
 
     private:
         Common::Actions Evaluate();
 
-        std::vector<Common::NeuronType> m_neurons;
-        // Add ActionFactory
+        std::vector<Common::Operation> m_neurons;
     };
-
 }
 
 #endif

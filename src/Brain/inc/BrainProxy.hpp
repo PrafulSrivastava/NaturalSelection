@@ -12,7 +12,7 @@ namespace NaturalSelection::Brain
     public:
         BrainProxy() = default;
         ~BrainProxy() override = default;
-        void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) override;
+        void React(const Common::GenomeSequence &, const Common::StimuliType &, std::reference_wrapper<sf::Shape>) override;
 
     private:
         void AddBrain(const Common::GenomeSequence &);

@@ -10,7 +10,7 @@ namespace NaturalSelection::Brain
         }
     }
 
-    void BrainProxy::React(const Common::GenomeSequence &sequence, const Common::StimuliType &stimuli, std::reference_wrapper<sf::CircleShape> drawableEntity)
+    void BrainProxy::React(const Common::GenomeSequence &sequence, const Common::StimuliType &stimuli, std::reference_wrapper<sf::Shape> drawableEntity)
     {
         // Add brain if not added already
         AddBrain(sequence);

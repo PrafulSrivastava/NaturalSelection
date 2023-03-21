@@ -10,7 +10,7 @@ namespace NaturalSelection::Brain
     {
     public:
         virtual ~IBrain() = default;
-        virtual void React(const Common::StimuliType &, std::reference_wrapper<sf::CircleShape>) = 0;
+        virtual void React(const Common::StimuliType &, std::reference_wrapper<sf::Shape>) = 0;
     };
 
 }

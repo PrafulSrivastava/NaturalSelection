@@ -6,17 +6,27 @@
 #include <functional>
 #include <unordered_map>
 #include <SFML/Graphics.hpp>
+#include "ConfigParser.hpp"
+
+#define Log(args, ...) NaturalSelection::Trace::Logger::Logging(args, __VA_ARGS__)
+using Log = NaturalSelection::Trace::LogLevel;
 
 namespace NaturalSelection::Common
 {
-    enum class NeuronType : int8_t
+    enum class Operation : int8_t
     {
         Invalid = -1,
-        MvN,
-        MvS,
-        MvE,
-        MvW,
-        MvR,
+
+        // Movement
+        MvNorth,
+        MvEast,
+        MvWest,
+        MvSouth,
+        MvRandom,
+
+        // Color
+        ChRed,
+        ChGreen,
     };
 
     using GenomeSequence = std::string;
@@ -29,10 +39,11 @@ namespace NaturalSelection::Common
         Chemical
     };
 
-    constexpr auto HEIGHT = 800;
-    constexpr auto WIDTH = 800;
+    constexpr auto HEIGHT = 5000;
+    constexpr auto WIDTH = 5000;
+    constexpr auto WINDOW_NAME = "NaturalEvolution";
 
-    using Actions = std::vector<NeuronType>;
+    using Actions = std::vector<Operation>;
 }
 
 #endif
