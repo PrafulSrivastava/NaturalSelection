@@ -19,6 +19,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/resource/json/include/
 	${CMAKE_SOURCE_DIR}/src/Action/inc/
 	${CMAKE_SOURCE_DIR}/src/Action/api/
+	${CMAKE_SOURCE_DIR}/src/Manager/inc/
+	${CMAKE_SOURCE_DIR}/src/Manager/api/
 	${CMAKE_SOURCE_DIR}/src/Brain/inc/
 	${CMAKE_SOURCE_DIR}/src/Brain/api/
 	${CMAKE_SOURCE_DIR}/src/Common/inc/

@@ -1,5 +1,5 @@
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
+#ifndef COGNITIVE_ENTITY_HPP
+#define COGNITIVE_ENTITY_HPP
 
 #include "IEntity.hpp"
 #include "BrainProxy.hpp"
@@ -8,16 +8,16 @@ namespace NaturalSelection::Entity
 {
 
     template <typename Shape, typename SFNAIE_Placeholder = std::void_t<>>
-    class Entity
+    class CognitiveEntity
     {
     };
 
     template <typename Shape>
-    class Entity<Shape,
-                 std::enable_if_t<std::is_base_of<sf::Shape, Shape>::value>> : public IEntity
+    class CognitiveEntity<Shape,
+                          std::enable_if_t<std::is_base_of<sf::Shape, Shape>::value>> : public IEntity
     {
     public:
-        Entity(Brain::BrainProxy &proxy) : m_brainProxy(proxy)
+        CognitiveEntity(Brain::BrainProxy &proxy) : m_brainProxy(proxy)
         {
             m_sequence.resize(Common::GenomeSequenceLength);
             for (size_t i = 0; i < Common::GenomeSequenceLength; i++)
@@ -26,7 +26,7 @@ namespace NaturalSelection::Entity
             }
         }
 
-        Entity(Brain::BrainProxy &proxy, const Common::GenomeSequence &sequence)
+        CognitiveEntity(Brain::BrainProxy &proxy, const Common::GenomeSequence &sequence)
             : m_sequence(sequence),
               m_brainProxy(proxy)
         {
@@ -56,7 +56,25 @@ namespace NaturalSelection::Entity
 
         void Update()
         {
-            m_brainProxy.get().React(m_sequence, Common::StimuliType::Mechanical, std::ref(m_drawableEntity));
+            sf::Shape &shape = m_drawableEntity;
+            m_brainProxy.get().React(m_sequence, Common::StimuliType::Mechanical, std::ref(shape));
+            Common::Utility::SetOriginToCenter(m_drawableEntity);
+        }
+
+        bool Intersects(const sf::FloatRect &rhs)
+        {
+            auto lhs = m_drawableEntity.getGlobalBounds();
+            return lhs.intersects(rhs);
+        }
+
+        sf::FloatRect GetGlobalBounds()
+        {
+            return m_drawableEntity.getGlobalBounds();
+        }
+
+        sf::Vector2f GetPosition()
+        {
+            return m_drawableEntity.getPosition();
         }
 
         void Draw(std::reference_wrapper<sf::RenderWindow> window)

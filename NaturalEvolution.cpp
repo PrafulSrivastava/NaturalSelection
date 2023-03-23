@@ -1,7 +1,10 @@
-#include "Entity.hpp"
+#include "CognitiveEntity.hpp"
+#include "NonCognitiveEntity.hpp"
 #include "IActionFactory.hpp"
+#include "QuadTree.hpp"
 
 using namespace NaturalSelection::Brain;
+using namespace NaturalSelection::Manager;
 using namespace NaturalSelection::Entity;
 using namespace NaturalSelection::Common;
 using namespace NaturalSelection::Trace;
@@ -32,18 +35,31 @@ void testRun()
 {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), WINDOW_NAME);
 
-    // std::vector<Entity<sf::RectangleShape>> orgs;
-    std::vector<Entity<sf::CircleShape>> orgs;
+    std::vector<NonCognitiveEntity<sf::RectangleShape>> nonCognitiveOrgs;
+
+    NonCognitiveEntity<sf::RectangleShape> nBoundry(NonCognitiveEntityType::NorthBoundry);
+    NonCognitiveEntity<sf::RectangleShape> sBoundry(NonCognitiveEntityType::SouthBoundry);
+    NonCognitiveEntity<sf::RectangleShape> eBoundry(NonCognitiveEntityType::EastBoundry);
+    NonCognitiveEntity<sf::RectangleShape> wBoundry(NonCognitiveEntityType::WestBoundry);
+
+    nonCognitiveOrgs.push_back(nBoundry);
+    nonCognitiveOrgs.push_back(sBoundry);
+    nonCognitiveOrgs.push_back(eBoundry);
+    nonCognitiveOrgs.push_back(wBoundry);
 
     BrainProxy proxy;
+    std::vector<CognitiveEntity<sf::CircleShape>> cognitiveOrgs;
 
-    for (auto i = 0; i < 10000; i++)
+    for (auto i = 0; i < 500; i++)
     {
-        Entity<sf::CircleShape> org(std::ref(proxy));
-        // Entity<sf::RectangleShape> org(std::ref(proxy));
-
+        CognitiveEntity<sf::CircleShape> org(std::ref(proxy));
         org.Spawn();
-        orgs.emplace_back(org);
+        cognitiveOrgs.emplace_back(org);
+    }
+
+    for (int i = 0; i < nonCognitiveOrgs.size(); i++)
+    {
+        nonCognitiveOrgs[i].Spawn();
     }
 
     while (window.isOpen())
@@ -65,11 +81,28 @@ void testRun()
                 }
             }
         }
-        for (auto &org : orgs)
+        auto root = std::make_shared<Node<int>>(sf::Vector2f(WIDTH / 2, HEIGHT / 2), sf::Vector2f(WIDTH, HEIGHT));
+
+        for (auto i = 0; i < 500; i++)
+        {
+            Insert<int>(root, cognitiveOrgs[i].GetPosition(), i);
+        }
+
+        Draw<int>(root, std::ref(window));
+
+        for (auto &org : cognitiveOrgs)
         {
             org.Update();
             org.Draw(std::ref(window));
         }
+
+        root.reset();
+
+        for (int i = 0; i < nonCognitiveOrgs.size(); i++)
+        {
+            nonCognitiveOrgs[i].Draw(std::ref(window));
+        }
+
         window.display();
     }
 }
@@ -79,6 +112,6 @@ int main()
     srand(time(nullptr));
     InitializeLogging();
     testRun();
-
+    // testQuadTree();
     return 0;
 }

@@ -11,33 +11,33 @@ namespace NaturalSelection::Action
     static void MvNorth(sf::Transformable &org)
     {
         Log(Log::DEBUG, __func__);
-        org.setPosition(org.getPosition().x, org.getPosition().y - step);
+        org.move(0, -step);
     };
 
     static void MvEast(sf::Transformable &org)
     {
         Log(Log::DEBUG, __func__);
-        org.setPosition(org.getPosition().x + step, org.getPosition().y);
+        org.move(step, 0);
     };
 
     static void MvWest(sf::Transformable &org)
     {
         Log(Log::DEBUG, __func__);
-        org.setPosition(org.getPosition().x - step, org.getPosition().y);
+        org.move(-step, 0);
     };
 
     static void MvSouth(sf::Transformable &org)
     {
         Log(Log::DEBUG, __func__);
-        org.setPosition(org.getPosition().x, org.getPosition().y + step);
+        org.move(0, step);
     };
 
     static void MvRandom(sf::Transformable &org)
     {
         Log(Log::DEBUG, __func__);
-        int8_t step_x = (rand() % 5) - 2;
-        int8_t step_y = (rand() % 5) - 2;
-        org.setPosition(org.getPosition().x + step_x, org.getPosition().y + step_y);
+        int8_t step_x = (rand() % 2) * std::pow(-1, (rand() % 2) + 1);
+        int8_t step_y = (rand() % 2) * std::pow(-1, (rand() % 2) + 1);
+        org.move(step * step_x, step * step_y);
     };
 };
 

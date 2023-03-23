@@ -16,9 +16,9 @@ namespace NaturalSelection::Brain
         void React(const Common::StimuliType &, std::reference_wrapper<sf::Shape>) override;
 
     private:
-        Common::Actions Evaluate();
+        Common::Operations Evaluate();
 
-        std::vector<Common::Operation> m_neurons;
+        Common::Operations m_neurons;
     };
 }
 

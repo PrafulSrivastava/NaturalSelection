@@ -3,13 +3,19 @@
 
 #include <iostream>
 #include <array>
+#include <thread>
+#include <random>
 #include <functional>
 #include <unordered_map>
+#include <chrono>
+#include <stack>
 #include <SFML/Graphics.hpp>
 #include "ConfigParser.hpp"
 
 #define Log(args, ...) NaturalSelection::Trace::Logger::Logging(args, __VA_ARGS__)
 using Log = NaturalSelection::Trace::LogLevel;
+
+using namespace std::chrono_literals;
 
 namespace NaturalSelection::Common
 {
@@ -39,11 +45,20 @@ namespace NaturalSelection::Common
         Chemical
     };
 
-    constexpr auto HEIGHT = 5000;
-    constexpr auto WIDTH = 5000;
+    constexpr auto HEIGHT = 800;
+    constexpr auto WIDTH = 800;
     constexpr auto WINDOW_NAME = "NaturalEvolution";
 
-    using Actions = std::vector<Operation>;
+    using Operations = std::vector<Operation>;
+
+    enum class NonCognitiveEntityType : int8_t
+    {
+        Invalid = -1,
+        NorthBoundry,
+        SouthBoundry,
+        EastBoundry,
+        WestBoundry
+    };
 }
 
 #endif

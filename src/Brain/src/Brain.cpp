@@ -11,7 +11,7 @@ namespace NaturalSelection::Brain
         }
     }
 
-    Common::Actions Brain::Evaluate()
+    Common::Operations Brain::Evaluate()
     {
         int16_t choice = (not m_neurons.empty()) ? (rand() % m_neurons.size()) : -1;
         if (choice == -1)
