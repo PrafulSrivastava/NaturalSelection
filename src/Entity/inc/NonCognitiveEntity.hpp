@@ -18,18 +18,29 @@ namespace NaturalSelection::Entity
                              std::enable_if_t<std::is_base_of<sf::Shape, Shape>::value>> : public IEntity
     {
     public:
-        NonCognitiveEntity(const Common::NonCognitiveEntityType &type)
-            : m_type(type)
+        NonCognitiveEntity(const Common::NonCognitiveEntityType &type, bool isUntouchable = false)
+            : m_type(type),
+              m_isUntouchable(isUntouchable)
+
         {
         }
 
         void Spawn()
         {
             m_drawableEntity = GetEntity(m_type);
+            if (m_isUntouchable)
+            {
+                m_drawableEntity.setFillColor(sf::Color::Red);
+            }
         }
 
         void Update()
         {
+        }
+
+        Shape &GetDrawableEntity()
+        {
+            return m_drawableEntity;
         }
 
         bool Intersects(const sf::FloatRect &rhs)
@@ -38,19 +49,14 @@ namespace NaturalSelection::Entity
             return lhs.intersects(rhs);
         }
 
-        sf::Vector2f GetPosition()
-        {
-            return m_drawableEntity.getPosition();
-        }
-
-        sf::FloatRect GetGlobalBounds()
-        {
-            return m_drawableEntity.getGlobalBounds();
-        }
-
         void Draw(std::reference_wrapper<sf::RenderWindow> window)
         {
             window.get().draw(m_drawableEntity);
+        }
+
+        bool IsUntouchable()
+        {
+            return m_isUntouchable;
         }
 
         void ToString()
@@ -60,6 +66,7 @@ namespace NaturalSelection::Entity
     private:
         Shape m_drawableEntity;
         Common::NonCognitiveEntityType m_type{Common::NonCognitiveEntityType::Invalid};
+        bool m_isUntouchable{false};
     };
 }
 

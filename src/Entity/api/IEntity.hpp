@@ -14,7 +14,8 @@ namespace NaturalSelection::Entity
         virtual void Spawn() = 0;
         virtual void Update() = 0;
         virtual bool Intersects(const sf::FloatRect &) = 0;
-        virtual void Draw(std::reference_wrapper<sf::RenderWindow>) = 0;
+
+    private:
     };
 
 }

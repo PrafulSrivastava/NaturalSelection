@@ -17,7 +17,7 @@ namespace NaturalSelection::Entity
                           std::enable_if_t<std::is_base_of<sf::Shape, Shape>::value>> : public IEntity
     {
     public:
-        CognitiveEntity(Brain::BrainProxy &proxy) : m_brainProxy(proxy)
+        CognitiveEntity(Brain::BrainProxy &proxy, int id) : m_brainProxy(proxy), m_id(id)
         {
             m_sequence.resize(Common::GenomeSequenceLength);
             for (size_t i = 0; i < Common::GenomeSequenceLength; i++)
@@ -26,9 +26,10 @@ namespace NaturalSelection::Entity
             }
         }
 
-        CognitiveEntity(Brain::BrainProxy &proxy, const Common::GenomeSequence &sequence)
+        CognitiveEntity(Brain::BrainProxy &proxy, const Common::GenomeSequence &sequence, int id)
             : m_sequence(sequence),
-              m_brainProxy(proxy)
+              m_brainProxy(proxy),
+              m_id(id)
         {
         }
 
@@ -36,7 +37,7 @@ namespace NaturalSelection::Entity
         {
             if constexpr (std::is_same<Shape, sf::RectangleShape>::value)
             {
-                m_drawableEntity.setPosition(rand() % Common::WIDTH, rand() % Common::HEIGHT);
+                m_drawableEntity.setPosition(rand() % (Common::WIDTH / 2) + Common::WIDTH / 4, rand() % (Common::HEIGHT / 2) + Common::HEIGHT / 4);
                 m_drawableEntity.setFillColor(sf::Color::Green);
                 m_drawableEntity.setSize(sf::Vector2f(100, 0));
                 m_drawableEntity.setOutlineThickness(1);
@@ -45,10 +46,10 @@ namespace NaturalSelection::Entity
 
             if constexpr (std::is_same<Shape, sf::CircleShape>::value)
             {
-                m_drawableEntity.setPosition(rand() % Common::WIDTH, rand() % Common::HEIGHT);
+                m_drawableEntity.setPosition(rand() % (Common::WIDTH / 2) + Common::WIDTH / 4, rand() % (Common::HEIGHT / 2) + Common::HEIGHT / 4);
+
                 m_drawableEntity.setFillColor(sf::Color::Green);
-                m_drawableEntity.setRadius(5);
-                m_drawableEntity.setPointCount(3);
+                m_drawableEntity.setRadius(4);
                 m_drawableEntity.setOutlineThickness(1);
                 m_drawableEntity.setOutlineColor(sf::Color::Red);
             }
@@ -67,19 +68,24 @@ namespace NaturalSelection::Entity
             return lhs.intersects(rhs);
         }
 
-        sf::FloatRect GetGlobalBounds()
+        Shape &GetDrawableEntity()
         {
-            return m_drawableEntity.getGlobalBounds();
-        }
-
-        sf::Vector2f GetPosition()
-        {
-            return m_drawableEntity.getPosition();
+            return m_drawableEntity;
         }
 
         void Draw(std::reference_wrapper<sf::RenderWindow> window)
         {
             window.get().draw(m_drawableEntity);
+        }
+
+        int GetId()
+        {
+            return m_id;
+        }
+
+        std::string GetGenomeSequence()
+        {
+            return m_sequence;
         }
 
         void ToString()
@@ -91,6 +97,7 @@ namespace NaturalSelection::Entity
         Common::GenomeSequence m_sequence{};
         Shape m_drawableEntity;
         std::reference_wrapper<Brain::BrainProxy> m_brainProxy;
+        int m_id{-1};
     };
 }
 
