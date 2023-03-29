@@ -22,7 +22,7 @@ using namespace std::chrono_literals;
 
 namespace NaturalSelection::Common
 {
-    constexpr auto CognitiveOrganismCount = 1000;
+    constexpr auto CognitiveOrganismCount = 10000;
 
     enum class Operation : int8_t
     {
@@ -62,7 +62,8 @@ namespace NaturalSelection::Common
         NorthBoundry,
         SouthBoundry,
         EastBoundry,
-        WestBoundry
+        WestBoundry,
+        RandomBlock,
     };
 
     constexpr auto BoundryWidth = 10;

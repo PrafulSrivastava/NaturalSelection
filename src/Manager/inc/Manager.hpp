@@ -7,6 +7,7 @@
 #include "BrainProxy.hpp"
 #include "QuadTree.hpp"
 #include "GenePool.hpp"
+#include "Grid.hpp"
 
 namespace NaturalSelection::Manager
 {
@@ -35,6 +36,8 @@ namespace NaturalSelection::Manager
         sf::Event m_event;
         Node<OrgRef> m_rootNode;
         Brain::GenePool m_genePool;
+
+        PlatformHandler<Grid> m_platform;
     };
 
 }

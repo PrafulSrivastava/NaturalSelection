@@ -17,7 +17,7 @@ namespace NaturalSelection::Common
         {
             auto duration = std::chrono::steady_clock::now() - m_start;
             auto timeElapsed = std::chrono::duration_cast<Resolution>(duration);
-            // Log(Log::INFO, "Context: ", m_context, "Time Elapsed : ", timeElapsed.count());
+            Log(Log::FATAL, "Context: ", m_context, "Time Elapsed : ", timeElapsed.count());
         }
 
     private:

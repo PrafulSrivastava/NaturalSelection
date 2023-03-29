@@ -11,7 +11,7 @@ namespace NaturalSelection::Manager
 
     void Manager::InitNonCognitiveEntities()
     {
-        Benchmark<std::chrono::microseconds> bm(__func__);
+        // Benchmark<std::chrono::microseconds> bm(__func__);
 
         Entity::NonCognitiveEntity<sf::RectangleShape> nBoundry(Common::NonCognitiveEntityType::NorthBoundry, true);
         Entity::NonCognitiveEntity<sf::RectangleShape> sBoundry(Common::NonCognitiveEntityType::SouthBoundry);
@@ -31,7 +31,7 @@ namespace NaturalSelection::Manager
 
     void Manager::InitCognitiveEntities()
     {
-        Benchmark<std::chrono::microseconds> bm(__func__);
+        // Benchmark<std::chrono::microseconds> bm(__func__);
         for (auto i = 0; i < Common::CognitiveOrganismCount; i++)
         {
             auto org = Entity::CognitiveEntity<sf::CircleShape>(std::ref(m_proxy), m_genePool.GetGenomeSequence(), i);
@@ -48,7 +48,7 @@ namespace NaturalSelection::Manager
 
     void Manager::GenerateTree()
     {
-        Benchmark<std::chrono::microseconds> bm(__func__);
+        // Benchmark<std::chrono::microseconds> bm(__func__);
 
         m_rootNode.Flush();
 
@@ -57,12 +57,12 @@ namespace NaturalSelection::Manager
             QuadTree<OrgRef>::Insert(m_rootNode, itr->GetDrawableEntity().getPosition(), std::ref(*itr));
         }
 
-        QuadTree<OrgRef>::Draw(m_rootNode, std::ref(m_window));
+        // QuadTree<OrgRef>::Draw(m_rootNode, std::ref(m_window));
     }
 
     void Manager::ManageCollisions()
     {
-        Benchmark<std::chrono::microseconds> bm(__func__);
+        // Benchmark<std::chrono::microseconds> bm(__func__);
 
         for (int i = 0; i < m_nonCognitiveOrgs.size(); i++)
         {
@@ -153,7 +153,6 @@ namespace NaturalSelection::Manager
 
             if (duration >= waitSpan)
             {
-                InitCognitiveEntities();
                 std::unordered_map<Common::GenomeSequence, float> mpOfSequences;
 
                 for (auto &itr : m_cognitiveOrgs)
@@ -164,10 +163,92 @@ namespace NaturalSelection::Manager
                 m_genePool.resetProbability(mpOfSequences);
                 begin = std::chrono::steady_clock::now();
                 mpOfSequences.clear();
+                m_cognitiveOrgs.clear();
+                InitCognitiveEntities();
             }
 
             m_window.display();
         }
     }
+
+    // void Manager::RunMainLoop()
+    // {
+    //     auto waitSpan = 15s;
+    //     auto begin = std::chrono::steady_clock::now();
+
+    //     m_platform.Init(WIDTH, HEIGHT);
+
+    //     for (auto &it : m_cognitiveOrgs)
+    //     {
+    //         m_platform.Register(std::ref(it));
+    //     }
+
+    //     while (m_window.isOpen())
+    //     {
+    //         Benchmark<std::chrono::microseconds> bm(__func__);
+    //         m_window.clear(sf::Color::Black);
+
+    //         ManageCollisions();
+
+    //         while (m_window.pollEvent(m_event))
+    //         {
+    //             if (m_event.type == sf::Event::Closed)
+    //             {
+    //                 m_window.close();
+    //             }
+    //             if (m_event.type == sf::Event::KeyPressed)
+    //             {
+    //                 if (m_event.key.code == sf::Keyboard::Escape)
+    //                 {
+    //                     m_window.close();
+    //                 }
+    //             }
+    //             if (m_event.type == sf::Event::MouseButtonPressed)
+    //             {
+    //                 if (m_event.mouseButton.button == sf::Mouse::Button::Left)
+    //                 {
+    //                     Entity::NonCognitiveEntity<sf::RectangleShape> block(Common::NonCognitiveEntityType::RandomBlock, sf::Vector2f(sf::Mouse::getPosition(m_window)), true);
+    //                     block.Spawn();
+    //                     m_nonCognitiveOrgs.emplace_back(block);
+    //                 }
+
+    //                 if (m_event.mouseButton.button == sf::Mouse::Button::Right)
+    //                 {
+    //                 }
+    //             }
+    //         }
+
+    //         // m_platform.Draw(std::ref(m_window)); // To Draw the grids
+
+    //         for (auto &org : m_cognitiveOrgs)
+    //         {
+    //             org.Update();
+    //             m_platform.Update(org.GetId());
+    //             auto result = m_platform.Fetch(org.GetId());
+    //             org.Draw(std::ref(m_window));
+    //         }
+
+    //         auto end = std::chrono::steady_clock::now();
+    //         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - begin);
+
+    //         if (duration >= waitSpan)
+    //         {
+    //             std::unordered_map<Common::GenomeSequence, float> mpOfSequences;
+
+    //             for (auto &itr : m_cognitiveOrgs)
+    //             {
+    //                 mpOfSequences[itr.GetGenomeSequence()]++;
+    //             }
+
+    //             m_genePool.resetProbability(mpOfSequences);
+    //             begin = std::chrono::steady_clock::now();
+    //             mpOfSequences.clear();
+    //             m_cognitiveOrgs.clear();
+    //             InitCognitiveEntities();
+    //         }
+
+    //         m_window.display();
+    //     }
+    // }
 
 }

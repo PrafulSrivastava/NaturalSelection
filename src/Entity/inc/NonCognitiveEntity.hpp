@@ -25,9 +25,19 @@ namespace NaturalSelection::Entity
         {
         }
 
+        NonCognitiveEntity(const Common::NonCognitiveEntityType &type, sf::Vector2f pos, bool isUntouchable = false)
+            : m_type(type),
+              m_isUntouchable(isUntouchable),
+              m_position(pos)
+        {
+        }
+
         void Spawn()
         {
             m_drawableEntity = GetEntity(m_type);
+            if (m_position.x != -Common::WIDTH && m_position.y != -Common::HEIGHT)
+                m_drawableEntity.setPosition(m_position);
+
             if (m_isUntouchable)
             {
                 m_drawableEntity.setFillColor(sf::Color::Red);
@@ -67,6 +77,7 @@ namespace NaturalSelection::Entity
         Shape m_drawableEntity;
         Common::NonCognitiveEntityType m_type{Common::NonCognitiveEntityType::Invalid};
         bool m_isUntouchable{false};
+        sf::Vector2f m_position{-Common::WIDTH, -Common::HEIGHT};
     };
 }
 

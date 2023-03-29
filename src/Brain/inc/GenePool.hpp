@@ -15,8 +15,8 @@ namespace NaturalSelection::Brain
     public:
         GenePool()
         {
-            // GeneratePatterns({}, Common::GenomeSequenceLength);
-            m_probabilities = {{"10000", 1.0f}, {"10000", 1.0f}, {"01000", 1.0f}, {"00100", 1.0f}, {"00010", 1.0f}};
+            GeneratePatterns({}, Common::GenomeSequenceLength);
+            // m_probabilities = {{"10000", 1.0f}, {"10000", 1.0f}, {"01000", 1.0f}, {"00100", 1.0f}, {"00010", 1.0f}};
 
             Init();
         }
@@ -77,7 +77,6 @@ namespace NaturalSelection::Brain
             int sum{0};
             for (auto it : mpOfSequences)
             {
-                // Log(Log::INFO, "Map of cnt: ", it.first, ", ", it.second);
                 sum += it.second;
             }
             for (auto it : mpOfSequences)

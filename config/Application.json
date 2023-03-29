@@ -1,6 +1,6 @@
 {
     "Version": 1.0,
-    "LoggingLevel": 4,
+    "LoggingLevel": 1,
     "LoggingType": "Console",
     "LogFilePath": "log.txt"
 }

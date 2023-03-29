@@ -6,7 +6,7 @@
 
 namespace NaturalSelection::Action
 {
-    constexpr auto step = 1;
+    constexpr auto step = 20;
 
     static void MvNorth(sf::Transformable &org)
     {

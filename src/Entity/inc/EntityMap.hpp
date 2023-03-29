@@ -31,6 +31,10 @@ namespace NaturalSelection::Entity
             entity.setSize(sf::Vector2f(Common::BoundryWidth, Common::HEIGHT));
             entity.setPosition(Common::WIDTH - Common::BoundryWidth / 2, Common::HEIGHT / 2);
             break;
+        case Common::NonCognitiveEntityType::RandomBlock:
+            entity.setFillColor(sf::Color::Red);
+            entity.setSize(sf::Vector2f{100, 100});
+            break;
         }
         Common::Utility::SetOriginToCenter(entity);
 
